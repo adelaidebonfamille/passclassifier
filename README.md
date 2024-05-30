@@ -45,78 +45,69 @@ from sklearn.metrics import accuracy_score
 
 These libraries are imported for data manipulation, feature extraction, model training, and evaluation.
 
-### 2. Mount Google Drive (Optional)
+### 2. PasswordStrengthClassifier Class
 
 ```python
-from google.colab import drive
-drive.mount('/content/drive', force_remount=True)
+class PasswordStrengthClassifier:
+    def __init__(self, filepath):
+        # Constructor to initialize variables
+    def load_data(self):
+        # Method to load data from CSV file
+    def preprocess_data(self):
+        # Method to preprocess loaded data
+    def train_model(self):
+        # Method to train the Logistic Regression model
+    def evaluate_model(self):
+        # Method to evaluate the trained model
+    def predict_password_strength(self, new_passwords):
+        # Method to predict the strength of new passwords
 ```
 
-This code mounts Google Drive if you're running the script on Google Colab. It's optional and can be skipped if not needed.
+The `PasswordStrengthClassifier` class encapsulates methods for loading data, preprocessing data, training the model, evaluating the model, and predicting password strengths.
 
-### 3. Load and Preprocess Data
+### 3. Load Data
 
 ```python
-filepath = '/content/drive/MyDrive/data.csv'
-data = pd.read_csv(filepath, delimiter=',', on_bad_lines='skip', engine='python')
-data['password'].fillna('', inplace=True)
-X = data['password']
-y = data['strength']
-X = X.apply(lambda x: x[:20])
+filepath = input("Enter the path to the CSV file: ")
+password_classifier = PasswordStrengthClassifier(filepath)
+password_classifier.load_data()
 ```
 
-This section loads the dataset, handles missing values, extracts the 'password' and 'strength' columns, and truncates passwords to 20 characters for feature extraction.
+The user is prompted to enter the path to the CSV file containing password data. The `load_data()` method reads the data from the file.
 
-### 4. Feature Extraction
+### 4. Preprocess Data
 
 ```python
-vectorizer = TfidfVectorizer(analyzer='char', lowercase=False, max_features=500)
-X_vectorized = vectorizer.fit_transform(X)
+password_classifier.preprocess_data()
 ```
 
-TfidfVectorizer is used to convert password strings into numerical vectors based on character frequencies.
+The `preprocess_data()` method handles missing values, extracts features, and splits the data into training and testing sets.
 
-### 5. Train-Test Split
+### 5. Train Model
 
 ```python
-X_train, X_test, y_train, y_test = train_test_split(X_vectorized, y, test_size=0.2, random_state=42)
+password_classifier.train_model()
 ```
 
-The dataset is split into training and testing sets to evaluate the model's performance.
+The `train_model()` method trains a Logistic Regression model on the training data.
 
-### 6. Model Training
+### 6. Evaluate Model
 
 ```python
-logreg = LogisticRegression(max_iter=1000)
-logreg.fit(X_train, y_train)
+password_classifier.evaluate_model()
 ```
 
-A Logistic Regression model is trained on the training data.
+The `evaluate_model()` method evaluates the trained model's accuracy on the testing data.
 
-### 7. Model Evaluation
-
-```python
-y_pred = logreg.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
-print("Model Accuracy:", accuracy)
-```
-
-The accuracy of the trained model is evaluated on the test data.
-
-### 8. Predictions for New Passwords
+### 7. Predict Password Strength
 
 ```python
 new_passwords = ['1j%bsQ*<+Ynz','kucing123','##barbie123','ajd1348#28t**','ppppppppp','adfkilws','nanananannanannan','anissajulianty07','anissa','123456','abcdef']
-new_passwords_vectorized = vectorizer.transform(new_passwords)
-predictions = logreg.predict(new_passwords_vectorized)
-print("Predictions for new passwords:")
-for password, prediction in zip(new_passwords, predictions):
-    print(f"{password}: {prediction}")
+password_classifier.predict_password_strength(new_passwords)
 ```
 
-The trained model is used to predict the strength of new passwords provided in the script.
+The `predict_password_strength()` method predicts the strength of new passwords provided in the script.
 
----
 ## Example Output
 
 Output:
