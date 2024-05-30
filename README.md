@@ -29,20 +29,9 @@ filepath = '/path/to/your/data.csv'
 ```
 
 ### 5. Run the Script
-
-Run the script using Python:
-
-```bash
-python password_strength_classifier.py
-```
-
 This will train the model on your dataset and output the accuracy of the model on the test data, as well as predictions for a list of new passwords provided in the script.
 
-## Example
-
-```python
-python password_strength_classifier.py
-```
+## Example Output
 
 Output:
 ```
