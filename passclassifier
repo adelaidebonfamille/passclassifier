@@ -16,24 +16,36 @@ class PasswordStrengthClassifier:
         self.y_test = None
 
     def load_data(self):
-        self.data = pd.read_csv(self.filepath, delimiter=',', on_bad_lines='skip', engine='python')
-        self.data['password'].fillna('', inplace=True)
+        try:
+            self.data = pd.read_csv(self.filepath, delimiter=',', on_bad_lines='skip', engine='python')
+        except FileNotFoundError:
+            print("File not found. Please provide a valid file path.")
 
     def preprocess_data(self):
-        X = self.data['password']
-        y = self.data['strength']
-        X = X.apply(lambda x: x[:20])
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        if self.data is not None:
+            self.data['password'].fillna('', inplace=True)
+            X = self.data['password']
+            y = self.data['strength']
+            X = X.apply(lambda x: x[:20])
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        else:
+            print("No data to preprocess. Please load data first.")
 
     def train_model(self):
-        X_train_vectorized = self.vectorizer.fit_transform(self.X_train)
-        self.logreg.fit(X_train_vectorized, self.y_train)
+        if self.X_train is not None and self.y_train is not None:
+            X_train_vectorized = self.vectorizer.fit_transform(self.X_train)
+            self.logreg.fit(X_train_vectorized, self.y_train)
+        else:
+            print("No training data available. Please preprocess data first.")
 
     def evaluate_model(self):
-        X_test_vectorized = self.vectorizer.transform(self.X_test)
-        y_pred = self.logreg.predict(X_test_vectorized)
-        accuracy = accuracy_score(self.y_test, y_pred)
-        print("Model Accuracy:", accuracy)
+        if self.X_test is not None and self.y_test is not None:
+            X_test_vectorized = self.vectorizer.transform(self.X_test)
+            y_pred = self.logreg.predict(X_test_vectorized)
+            accuracy = accuracy_score(self.y_test, y_pred)
+            print("Model Accuracy:", accuracy)
+        else:
+            print("No testing data available. Please preprocess data first.")
 
     def predict_password_strength(self, new_passwords):
         new_passwords_vectorized = self.vectorizer.transform(new_passwords)
@@ -43,7 +55,7 @@ class PasswordStrengthClassifier:
             print(f"{password}: {prediction}")
 
 if __name__ == "__main__":
-    filepath = 'YOUR-PATH'
+    filepath = input("Enter the path to the CSV file: ")
     password_classifier = PasswordStrengthClassifier(filepath)
     password_classifier.load_data()
     password_classifier.preprocess_data()
