@@ -60,11 +60,3 @@ anissa: weak
 123456: weak
 abcdef: weak
 ```
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to customize this README according to your project's specifics. Let me know if you need further assistance!
