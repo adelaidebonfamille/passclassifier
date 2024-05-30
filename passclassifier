@@ -43,10 +43,7 @@ class PasswordStrengthClassifier:
             print(f"{password}: {prediction}")
 
 if __name__ == "__main__":
-    from google.colab import drive
-    drive.mount('/content/drive', force_remount=True)
-
-    filepath = '/content/drive/MyDrive/data.csv'
+    filepath = 'YOUR-PATH'
     password_classifier = PasswordStrengthClassifier(filepath)
     password_classifier.load_data()
     password_classifier.preprocess_data()
