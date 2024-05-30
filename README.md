@@ -20,11 +20,7 @@ Clone this repository to your local machine:
 git clone https://github.com/yourusername/password-strength-classifier.git
 ```
 
-### 3. Data Preparation
-
-Prepare your dataset in CSV format. The dataset should contain two columns: 'password' and 'strength', where 'password' is the password string and 'strength' is the corresponding label indicating the strength of the password (e.g., 'weak', 'medium', 'strong').
-
-### 4. Update Filepath
+### 3. Update Filepath
 
 Update the `filepath` variable in the script to point to your dataset:
 
