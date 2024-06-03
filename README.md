@@ -17,7 +17,7 @@ pip install pandas scikit-learn
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/password-strength-classifier.git
+git clone https://github.com/adelaidebonfamille/password-strength-classifier.git
 ```
 
 ### 3. Update Filepath
